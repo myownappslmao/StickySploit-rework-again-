@@ -1,0 +1,265 @@
+
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local SideMain = Instance.new("Frame")
+local UICorner_2 = Instance.new("UICorner")
+local TextLabel = Instance.new("TextLabel")
+local Rejoin = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local Dash = Instance.new("TextButton")
+local UICorner_4 = Instance.new("UICorner")
+local TrashTalk = Instance.new("TextButton")
+local UICorner_5 = Instance.new("UICorner")
+local ESP = Instance.new("TextButton")
+local UICorner_6 = Instance.new("UICorner")
+local Fly = Instance.new("TextButton")
+local UICorner_7 = Instance.new("UICorner")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+Main.Name = "Main"
+Main.Parent = ScreenGui
+Main.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+Main.Position = UDim2.new(0.259685874, 0, 0.262941301, 0)
+Main.Size = UDim2.new(0, 161, 0, 204)
+
+UICorner.Parent = Main
+
+SideMain.Name = "SideMain"
+SideMain.Parent = Main
+SideMain.BackgroundColor3 = Color3.fromRGB(64, 64, 46)
+SideMain.BackgroundTransparency = 0.450
+SideMain.Position = UDim2.new(-0.00275969505, 0, -0.0025395751, 0)
+SideMain.Size = UDim2.new(0, 161, 0, 46)
+
+UICorner_2.Parent = SideMain
+
+TextLabel.Parent = SideMain
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.Position = UDim2.new(0, 0, -0.0104768174, 0)
+TextLabel.Size = UDim2.new(0, 161, 0, 45)
+TextLabel.Font = Enum.Font.Oswald
+TextLabel.Text = "StickySploit"
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextSize = 37.000
+
+Rejoin.Name = "Rejoin"
+Rejoin.Parent = Main
+Rejoin.BackgroundColor3 = Color3.fromRGB(64, 64, 46)
+Rejoin.Position = UDim2.new(0.0848076269, 0, 0.268781006, 0)
+Rejoin.Size = UDim2.new(0, 38, 0, 19)
+Rejoin.Font = Enum.Font.SourceSans
+Rejoin.Text = "Rejoin"
+Rejoin.TextColor3 = Color3.fromRGB(0, 0, 0)
+Rejoin.TextSize = 14.000
+Rejoin.MouseButton1Down:connect(function()
+	local TeleportService = game:GetService("TeleportService")
+	local Player = game:GetService("Players").LocalPlayer
+
+	TeleportService:Teleport(game.PlaceId, Player)
+end)
+UICorner_3.CornerRadius = UDim.new(0, 4)
+UICorner_3.Parent = Rejoin
+
+Dash.Name = "Dash"
+Dash.Parent = Main
+Dash.BackgroundColor3 = Color3.fromRGB(64, 64, 46)
+Dash.Position = UDim2.new(0.0848076269, 0, 0.450153559, 0)
+Dash.Size = UDim2.new(0, 38, 0, 19)
+Dash.Font = Enum.Font.SourceSans
+Dash.Text = "Shift2Dash"
+Dash.TextColor3 = Color3.fromRGB(0, 0, 0)
+Dash.TextSize = 10.000
+Dash.MouseButton1Down:connect(function()
+	local UserInputService = game:GetService("UserInputService")
+	local DashKey = Enum.KeyCode.LeftShift
+	local DashDistance = 5
+	local TweenFovSpeed = 0.1
+	local Camera = workspace.CurrentCamera
+
+	local TweenService = game:GetService("TweenService")
+	local MyTweenInfo = TweenInfo.new(TweenFovSpeed, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+	local Properties1 = {FieldOfView = Camera.FieldOfView + 3}
+	local Properties2 = {FieldOfView = Camera.FieldOfView}
+	local FovAnimation_In = TweenService:Create(Camera, MyTweenInfo, Properties1)
+	local FovAnimation_Out = TweenService:Create(Camera, MyTweenInfo, Properties2)
+
+	local Character = game.Players.LocalPlayer.Character
+
+	UserInputService.InputBegan:Connect(function(Input)
+		if Input.KeyCode == DashKey then
+			FovAnimation_In:Play()
+			for i = 1, DashDistance, 1 do
+				wait()
+				Character.HumanoidRootPart.CFrame = Character.HumanoidRootPart.CFrame * CFrame.new(0, 0.5, -i)
+			end
+			FovAnimation_Out:Play()
+		end
+	end)
+end)
+UICorner_4.CornerRadius = UDim.new(0, 4)
+UICorner_4.Parent = Dash
+
+TrashTalk.Name = "TrashTalk"
+TrashTalk.Parent = Main
+TrashTalk.BackgroundColor3 = Color3.fromRGB(64, 64, 46)
+TrashTalk.Position = UDim2.new(0.0848076344, 0, 0.646232009, 0)
+TrashTalk.Size = UDim2.new(0, 38, 0, 19)
+TrashTalk.Font = Enum.Font.SourceSans
+TrashTalk.Text = "TrashTalk"
+TrashTalk.TextColor3 = Color3.fromRGB(0, 0, 0)
+TrashTalk.TextSize = 12.000
+TrashTalk.MouseButton1Down:connect(function()
+	local Player = game.Players.LocalPlayer
+	local TrashTalk = {"UR TRASH KID", "L", "EZ", "GET SLAPPED", "HOW DID YOU LOSE", "WYD? LOL", "Smh", "too bad", "ROFL", "F", "YOU'RE GARBAGE", "GET CLAPPED"}
+	local Mouse = Player:GetMouse()
+	local Cooldown = 0.5
+	local CooldownWaited = 0
+
+	local Key = "h"
+
+	function TalkTrash(k)
+		if k == Key and CooldownWaited == 0 then
+			game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(TrashTalk[math.random(1,#TrashTalk)], "All")
+			CooldownWaited = Cooldown
+
+			repeat wait(Cooldown) CooldownWaited = 0 until CooldownWaited == 0
+		end
+	end
+
+	Mouse.KeyDown:Connect(TalkTrash)
+end)
+
+UICorner_5.CornerRadius = UDim.new(0, 4)
+UICorner_5.Parent = TrashTalk
+
+ESP.Name = "ESP"
+ESP.Parent = Main
+ESP.BackgroundColor3 = Color3.fromRGB(64, 64, 46)
+ESP.Position = UDim2.new(0.0848076344, 0, 0.837408483, 0)
+ESP.Size = UDim2.new(0, 38, 0, 19)
+ESP.Font = Enum.Font.SourceSans
+ESP.Text = "ESP"
+ESP.TextColor3 = Color3.fromRGB(0, 0, 0)
+ESP.TextSize = 12.000
+ESP.MouseButton1Down:connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/ESP-Script/main/ESP.lua"))()
+
+end)
+UICorner_6.CornerRadius = UDim.new(0, 4)
+UICorner_6.Parent = ESP
+
+Fly.Name = "Fly"
+Fly.Parent = Main
+Fly.BackgroundColor3 = Color3.fromRGB(64, 64, 46)
+Fly.Position = UDim2.new(0.612757921, 0, 0.268781006, 0)
+Fly.Size = UDim2.new(0, 38, 0, 19)
+Fly.Font = Enum.Font.SourceSans
+Fly.Text = "Fly"
+Fly.TextColor3 = Color3.fromRGB(0, 0, 0)
+Fly.TextSize = 12.000
+Fly.MouseButton1Down:connect(function()
+	repeat wait()
+	until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Torso") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid")
+	local mouse = game.Players.LocalPlayer:GetMouse()
+	repeat wait() until mouse
+	local plr = game.Players.LocalPlayer
+	local torso = plr.Character.Torso
+	local flying = true
+	local deb = true
+	local ctrl = {f = 0, b = 0, l = 0, r = 0}
+	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
+	local maxspeed = 50
+	local speed = 0
+
+	function Fly()
+		local bg = Instance.new("BodyGyro", torso)
+		bg.P = 9e4
+		bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+		bg.cframe = torso.CFrame
+		local bv = Instance.new("BodyVelocity", torso)
+		bv.velocity = Vector3.new(0,0.1,0)
+		bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
+		repeat wait()
+			plr.Character.Humanoid.PlatformStand = true
+			if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then
+				speed = speed+.5+(speed/maxspeed)
+				if speed > maxspeed then
+					speed = maxspeed
+				end
+			elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then
+				speed = speed-1
+				if speed < 0 then
+					speed = 0
+				end
+			end
+			if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
+				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
+				lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r}
+			elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then
+				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
+			else
+				bv.velocity = Vector3.new(0,0.1,0)
+			end
+			bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0)
+		until not flying
+		ctrl = {f = 0, b = 0, l = 0, r = 0}
+		lastctrl = {f = 0, b = 0, l = 0, r = 0}
+		speed = 0
+		bg:Destroy()
+		bv:Destroy()
+		plr.Character.Humanoid.PlatformStand = false
+	end
+	mouse.KeyDown:connect(function(key)
+		if key:lower() == "e" then
+			if flying then flying = false
+			else
+				flying = true
+				Fly()
+			end
+		elseif key:lower() == "w" then
+			ctrl.f = 1
+		elseif key:lower() == "s" then
+			ctrl.b = -1
+		elseif key:lower() == "a" then
+			ctrl.l = -1
+		elseif key:lower() == "d" then
+			ctrl.r = 1
+		end
+	end)
+	mouse.KeyUp:connect(function(key)
+		if key:lower() == "w" then
+			ctrl.f = 0
+		elseif key:lower() == "s" then
+			ctrl.b = 0
+		elseif key:lower() == "a" then
+			ctrl.l = 0
+		elseif key:lower() == "d" then
+			ctrl.r = 0
+		end
+	end)
+	Fly()
+	
+end)
+UICorner_7.CornerRadius = UDim.new(0, 4)
+UICorner_7.Parent = Fly
+
+-- Scripts:
+
+local function VHTZYQ_fake_script() -- ScreenGui.Script 
+	local script = Instance.new('Script', ScreenGui)
+
+	frame = script.Parent.Main 
+	frame.Draggable = true
+	frame.Active = true
+	frame.Selectable = true
+	
+end
+coroutine.wrap(VHTZYQ_fake_script)()
